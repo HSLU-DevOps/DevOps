@@ -1,0 +1,32 @@
+name: Docker Compose CI for Swarm
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Build and deploy using Docker Stack
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        run: |
+          # Build the services as defined in docker-compose.yml
+          docker-compose -f docker-compose.yml build
+          
+          # Deploy the services to Docker Swarm using docker stack
+          docker stack deploy --compose-file docker-compose.yml my_stack
+
+      - name: Check services
+        run: |
+          docker service ls
