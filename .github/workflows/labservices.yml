@@ -10,7 +10,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/WebAPI
-  IMAGE_TAG: sha-${{ github.sha }}
 
 jobs:
   build:
@@ -20,6 +19,8 @@ jobs:
       packages: write
       attestations: write
       id-token: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tags }}
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +70,7 @@ jobs:
       - name: Deploy to Docker Swarm
         working-directory: .
         env:
+          DOCKER_IMAGE: ${{ needs.build.outputs.image_tag }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
