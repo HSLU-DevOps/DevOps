@@ -1,4 +1,4 @@
-name: Docker Compose CI for Swarm
+name: CI for Docker Swarm
 
 on:
   push:
@@ -7,26 +7,21 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  COMMIT_HASH: ${{ github.sha }}
+
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted
-
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-
-      - name: Build and deploy using Docker Stack
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      - uses: actions/checkout@v4
+      - name: Build and push
+        working-directory: ./WebAPI
         run: |
-          # Build the services as defined in docker-compose.yml
-          docker-compose -f docker-compose.yml build
-          
-          # Deploy the services to Docker Swarm using docker stack
-          docker stack deploy --compose-file docker-compose.yml my_stack
-
-      - name: Check services
-        run: |
-          docker service ls
+          docker login ${{ env.REGISTRY }} --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+          docker buildx build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMMIT_HASH }}
