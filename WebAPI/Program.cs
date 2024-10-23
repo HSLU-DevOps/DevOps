@@ -16,8 +16,8 @@ builder.Services.AddDbContext<TodoDbContext>(opt =>
                   $"Port=5432;" +
                   $"Database={Environment.GetEnvironmentVariable("POSTGRES_DB")};" +
                   $"Pooling=true;" +
-                  $"Min Pool Size=0;" +
-                  $"Max Pool Size=100;" +
+                  $"Minimum Pool Size=0;" +
+                  $"Maximum Pool Size=100;" +
                   $"Connection Lifetime=0;");
 });
 
