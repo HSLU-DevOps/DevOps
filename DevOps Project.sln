@@ -5,7 +5,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
 		docker-stack.yml = docker-stack.yml
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTests", "WebTests\WebTests.csproj", "{BAD025D6-3C07-4CF0-AB68-DB4DA4720BC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,5 +21,9 @@ Global
 		{1409B548-0E48-44B1-BEC9-D756DE413EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1409B548-0E48-44B1-BEC9-D756DE413EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1409B548-0E48-44B1-BEC9-D756DE413EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD025D6-3C07-4CF0-AB68-DB4DA4720BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD025D6-3C07-4CF0-AB68-DB4DA4720BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD025D6-3C07-4CF0-AB68-DB4DA4720BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD025D6-3C07-4CF0-AB68-DB4DA4720BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
