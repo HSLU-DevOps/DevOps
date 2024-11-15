@@ -71,7 +71,7 @@ public class Tests
 
         // Assert
         var okResult = result as OkObjectResult;
-        Assert.That(okResult, Is.Not.Null);
+        Assert.That(okResult, Is.Null);
         var returnedTodos = okResult.Value as List<Todo>;
         Assert.That(returnedTodos, Is.Not.Null);
         Assert.That(returnedTodos, Is.Empty);
