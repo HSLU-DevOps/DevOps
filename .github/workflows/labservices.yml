@@ -2,9 +2,8 @@ name: CI for Docker Swarm
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
   workflow_dispatch:
 
 env:
