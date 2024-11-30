@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement;
@@ -6,7 +6,6 @@ using Moq;
 using WebAPI.Controllers;
 using WebAPI.Features;
 using WebAPI.Persistence;
-using Xunit;
 using Assert = Xunit.Assert;
 
 namespace WebTests;
