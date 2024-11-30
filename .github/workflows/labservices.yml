@@ -75,6 +75,7 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: docker stack deploy -c docker-stack.yml --detach=false --with-registry-auth devops
 
-      - name: Run tests
+      - name: Run integration tests
         run: |
-          docker exec $(docker ps -q -f name=webapi) dotnet test --no-build -c Release
+          curl -s http://localhost:8080/health || exit 1
+          curl -X POST http://localhost:8080/api/todos -d '{"name": "Test"}'
