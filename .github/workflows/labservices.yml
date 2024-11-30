@@ -74,3 +74,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: docker stack deploy -c docker-stack.yml --detach=false --with-registry-auth devops
+
+      - name: Run tests
+        run: |
+          docker exec $(docker ps -q -f name=webapi) dotnet test --no-build -c Release
