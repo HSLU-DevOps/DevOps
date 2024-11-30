@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
 using WebAPI.Controllers;
 using WebAPI.Persistence;
 
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<TodoDbContext>(opt =>
                   $"Maximum Pool Size=100;" +
                   $"Connection Lifetime=0;");
 });
+
+builder.Services.AddFeatureManagement();
 
 var app = builder.Build();
 
