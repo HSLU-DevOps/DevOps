@@ -137,13 +137,12 @@ public class TodoControllerTests
     }
 
     [Fact]
-    public async Task Create_FeatureEnabled_CreatesTodo()
+    public async Task Create_FeatureEnabled_CreatesTodo_ReturnsGuid()
     {
         // Arrange
         var options = GetDbContextOptions();
         var testTodo = new Todo(Guid.NewGuid(), "Test Todo", "Test Description", false, DateTime.Today, null);
         await using var context = new TodoDbContext(options);
-
         _mockFeatureManager.Setup(fm => fm.IsEnabledAsync(FeatureFlags.Create)).ReturnsAsync(true);
 
         var controller = new TodoController(context, _mockFeatureManager.Object);
@@ -153,15 +152,17 @@ public class TodoControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var saveResult = Assert.IsType<int>(okResult.Value);
-        Assert.Equal(1, saveResult);
+        var returnedId = Assert.IsType<Guid>(okResult.Value);
+        Assert.NotEqual(Guid.Empty, returnedId);
 
-        // Verify the Todo was added
-        var addedTodo = await context.Todos.FirstOrDefaultAsync(t => t.Title == testTodo.Title);
+        // Verify the "to do" was added to the database.
+        var addedTodo = await context.Todos.FirstOrDefaultAsync(t => t.Id == returnedId);
         Assert.NotNull(addedTodo);
         Assert.Equal(testTodo.Title, addedTodo.Title);
         Assert.Equal(testTodo.Description, addedTodo.Description);
+        Assert.Equal(testTodo.Done, addedTodo.Done);
     }
+
 
     [Fact]
     public async Task Create_FeatureDisabled_Returns501NotImplemented()
