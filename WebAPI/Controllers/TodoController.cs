@@ -7,7 +7,7 @@ using WebAPI.Persistence;
 namespace WebAPI.Controllers;
 
 [ApiController]
-[Route("api/todos")]
+[Route("[controller]/[action]")]
 public class TodoController(TodoDbContext dbContext, IFeatureManager featureManager) : ControllerBase
 {
     [HttpGet("{id:guid}")]
@@ -32,15 +32,9 @@ public class TodoController(TodoDbContext dbContext, IFeatureManager featureMana
     {
         if (!await featureManager.IsEnabledAsync(FeatureFlags.Create))
             return StatusCode(StatusCodes.Status501NotImplemented);
-
-        var newTodo = todo with { Id = Guid.NewGuid(), Created = DateTime.UtcNow, Completed = null };
-
-        dbContext.Todos.Add(newTodo);
-        await dbContext.SaveChangesAsync();
-
-        return Ok(newTodo.Id);
+        dbContext.Todos.Add(todo with { Id = Guid.NewGuid(), Created = DateTime.Today });
+        return Ok(await dbContext.SaveChangesAsync());
     }
-
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)

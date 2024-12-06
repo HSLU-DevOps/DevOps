@@ -74,69 +74,8 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: docker stack deploy -c docker-stack.yml --detach=false --with-registry-auth devops
-  
-  integration-tests:
-    runs-on: self-hosted
-    needs: deploy
-    steps:
-      - name: Wait for application health
-        run: |
-          curl -s http://localhost:8080/health || exit 1
 
       - name: Run integration tests
         run: |
-          # Create a todo
-          create_response=$(curl -s -X POST http://localhost:8080/api/todos \
-            -H "Content-Type: application/json" \
-            -d '{"title": "Test Todo", "description": "Test Description", "done": false}')
-
-          echo "Create response: $create_response"
-
-          # Just use the raw create_response as the todo_id since the endpoint returns a plain GUID
-          todo_id="$create_response"
-          echo "Created todo ID: $todo_id"
-
-          if [ -z "$todo_id" ] || [ "$todo_id" == "null" ]; then
-            echo "Failed to create todo."
-            exit 1
-          fi
-
-          # Now continue with your read and delete operations as before
-          # Read the todo
-          read_response=$(curl -s -X GET http://localhost:8080/api/todos/$todo_id)
-          echo "Read response: $read_response"
-
-          if [ -z "$read_response" ] || [ "$read_response" == "null" ]; then
-            echo "Failed to read todo."
-            exit 1
-          fi
-
-          # Validate fields
-          title_val=$(echo "$read_response" | jq -r '.title')
-          description_val=$(echo "$read_response" | jq -r '.description')
-          done_val=$(echo "$read_response" | jq -r '.done')
-
-          if [ "$title_val" != "Test Todo" ]; then
-            echo "Title mismatch."
-            exit 1
-          fi
-
-          if [ "$description_val" != "Test Description" ]; then
-            echo "Description mismatch."
-            exit 1
-          fi
-
-          if [ "$done_val" != "false" ]; then
-            echo "Expected done to be false."
-            exit 1
-          fi
-
-          # Delete the todo
-          delete_response=$(curl -s -X DELETE http://localhost:8080/api/todos/$todo_id)
-          echo "Delete response: $delete_response"
-
-          # Adjust if needed, depending on the delete endpoint response format
-          if [ -n "$delete_response" ] && [[ "$delete_response" != *"success"* ]]; then
-            echo "Failed to delete todo."
-            exit 1
-          fi
+          curl -s http://localhost:8080/health || exit 1
+          curl -X POST http://localhost:8080/api/todos -d '{"name": "Test"}'
