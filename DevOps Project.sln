@@ -11,6 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTests", "WebTests\WebTests.csproj", "{20A7737F-A108-4492-B293-21E5525F1308}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github Workflows", "Github Workflows", "{B000FF9F-CB37-4266-9479-7FA71071476B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql.yml = .github\workflows\codeql.yml
+		.github\workflows\labservices.yml = .github\workflows\labservices.yml
+		.github\workflows\QualityGate.yml = .github\workflows\QualityGate.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
