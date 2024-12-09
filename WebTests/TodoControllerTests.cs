@@ -201,7 +201,7 @@ public class TodoControllerTests
         var result = await controller.Delete(testTodo.Id);
 
         // Assert
-        var okResult = Assert.IsType<OkResult>(result);
+        Assert.IsType<OkResult>(result);
 
         // Verify the Todo was deleted
         var deletedTodo = await context.Todos.FindAsync(testTodo.Id);
