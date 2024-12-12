@@ -1,4 +1,4 @@
-name: Monitoring Infrastructure Deployment
+name: Infrastructure Deployment
 
 on:
   push:

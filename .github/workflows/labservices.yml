@@ -1,4 +1,4 @@
-name: CI for Docker Swarm
+name: App Build & Deployment
 
 on:
   push:
