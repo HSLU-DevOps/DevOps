@@ -11,7 +11,7 @@ STACK_NAME="infra"
 # Sets the Docker Config that should be used for the deployment
 deploy_docker_config() {
   echo "Deploying with Docker Config: ${config_deploy}"
-  if [[ -v "${GITHUB_ENV:-}" ]]; then
+  if [[ -f "${GITHUB_ENV:-}" ]]; then
     echo "${PREFIX_ENV}_${name^^}=${config_deploy}" >>"$GITHUB_ENV"
   fi
 }
