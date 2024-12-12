@@ -1,0 +1,23 @@
+name: Monitoring Infrastructure Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Infrastructure/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Docker Configs
+        working-directory: ./Infrastructure
+        run: bash deploy-config.sh
+
+      - name: Deploy to Docker Swarm
+        working-directory: ./Infrastructure
+        run: docker stack deploy -c docker-stack.yml --detach=false --with-registry-auth infra

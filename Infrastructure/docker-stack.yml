@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  grafana:
+    image: grafana/grafana:9.1.7
+    configs:
+      - source: grafana-datasources
+        target: /etc/grafana/provisioning/datasources/datasources.yml
+    deploy:
+      mode: replicated
+      placement:
+        constraints:
+          - node.labels.volumes==true
+      replicas: 1
+    networks:
+      - metrics
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:v3.0.1
+    configs:
+      - source: prometheus-config
+        target: /etc/prometheus/prometheus.yml
+    deploy:
+      mode: replicated
+      placement:
+        constraints:
+          - node.labels.volumes==true
+      replicas: 1
+    networks:
+      - metrics
+    user: root
+    volumes:
+      - prometheus:/prometheus
+      - /var/run/docker.sock:/var/run/docker.sock
+
+configs:
+  grafana-datasources:
+    external: true
+    name: ${INFRA_CONFIGS_DATASOURCES}
+  prometheus-config:
+    external: true
+    name: ${INFRA_CONFIGS_PROMETHEUS}
+
+networks:
+  metrics:
+
+volumes:
+  grafana:
+  prometheus:
