@@ -16,7 +16,7 @@ public class HealthCheckDb(TodoDbContext dbContext) : IHealthCheck
                 ? new HealthCheckResult(HealthStatus.Healthy, "Database is connected")
                 : new HealthCheckResult(HealthStatus.Unhealthy, "Database is not connected");
         }
-        catch (Exception e)
+        catch (OperationCanceledException e)
         {
             return new HealthCheckResult(HealthStatus.Unhealthy, "Database is not connected", e);
         }

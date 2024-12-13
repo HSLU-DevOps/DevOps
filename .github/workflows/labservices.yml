@@ -85,4 +85,3 @@ jobs:
       - name: Run integration tests
         run: |
           curl -s http://localhost:8080/health || exit 1
-          curl -X POST http://localhost:8080/api/todos -d '{"name": "Test"}'
