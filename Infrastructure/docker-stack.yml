@@ -11,6 +11,9 @@ services:
         constraints:
           - node.labels.volumes==true
       replicas: 1
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     networks:
       - metrics
     ports:
