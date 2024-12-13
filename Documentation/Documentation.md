@@ -23,7 +23,7 @@
    ```
    und schlussendlich werden die Änderungen gepushed mit
    ```bash
-   git push -u feature/<name>
+   git push -u origin feature/<name>
    ```
    und ein PR wird nach Schritt 5 erstellt.
 3. **Implementierung und Tests:**  
