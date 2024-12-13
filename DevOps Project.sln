@@ -14,8 +14,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github Workflows", "Github Workflows", "{B000FF9F-CB37-4266-9479-7FA71071476B}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\codeql.yml = .github\workflows\codeql.yml
+		.github\workflows\infrastructure.yml = .github\workflows\infrastructure.yml
 		.github\workflows\labservices.yml = .github\workflows\labservices.yml
-		.github\workflows\QualityGate.yml = .github\workflows\QualityGate.yml
+		.github\workflows\qualitygate.yml = .github\workflows\qualitygate.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6451DBCF-13E2-4480-99AD-247B8A83F98A}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\docker-stack.yml = Infrastructure\docker-stack.yml
+		Infrastructure\config\promtail.yml = Infrastructure\config\promtail.yml
+		Infrastructure\config\datasources.yml = Infrastructure\config\datasources.yml
+		Infrastructure\config\prometheus.yml = Infrastructure\config\prometheus.yml
+		Infrastructure\deploy-config.sh = Infrastructure\deploy-config.sh
 	EndProjectSection
 EndProject
 Global
