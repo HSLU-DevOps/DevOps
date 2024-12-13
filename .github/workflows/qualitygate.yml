@@ -4,6 +4,13 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - '.github/workflows/codeql.yml'
+      - '.github/workflows/infrastructure.yml'
+      - '.github/workflows/labservices.yml'
+      - 'Documentation/**'
+      - 'Infrastructure/**'
+      - 'README.md'
 
 jobs:
   lint:

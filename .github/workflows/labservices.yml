@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/workflows/codeql.yml'
+      - '.github/workflows/infrastructure.yml'
+      - '.github/workflows/qualitygate.yml'
+      - 'Documentation/**'
+      - 'Infrastructure/**'
+      - 'README.md'
   workflow_dispatch:
 
 env:
