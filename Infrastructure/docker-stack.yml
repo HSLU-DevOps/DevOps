@@ -31,6 +31,8 @@ services:
       replicas: 1
     networks:
       - metrics
+    ports:
+      - "9090:9090"
     user: root
     volumes:
       - prometheus:/prometheus
